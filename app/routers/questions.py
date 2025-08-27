@@ -30,6 +30,3 @@ async def delete_question_by_id(id: int, session: AsyncSession = Depends(get_ses
     pass
 
 
-@questions.post("/questions/{id}/answers/")
-async def add_answer_to_question(id: int, session: AsyncSession = Depends(get_session)):
-    pass
