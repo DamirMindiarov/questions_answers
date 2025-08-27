@@ -20,3 +20,11 @@ async def create_new_question(session: AsyncSession = Depends(get_session)):
     return question
 
 
+@router.get("/questions/{id}")
+async def get_question_by_id(id: int, session: AsyncSession = Depends(get_session)):
+    pass
+
+
+@router.delete("/questions/{id}")
+async def delete_question_by_id(id: int, session: AsyncSession = Depends(get_session)):
+    pass
