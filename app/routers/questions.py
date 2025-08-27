@@ -28,3 +28,8 @@ async def get_question_by_id(id: int, session: AsyncSession = Depends(get_sessio
 @questions.delete("/questions/{id}")
 async def delete_question_by_id(id: int, session: AsyncSession = Depends(get_session)):
     pass
+
+
+@questions.post("/questions/{id}/answers/")
+async def add_answer_to_question(id: int, session: AsyncSession = Depends(get_session)):
+    pass
