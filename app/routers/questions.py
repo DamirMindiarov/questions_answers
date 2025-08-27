@@ -4,15 +4,15 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.database.functions import get_session
 from app.database.models import Question
 
-router = APIRouter()
+questions = APIRouter()
 
 
-@router.get("/questions/")
+@questions.get("/questions/")
 async def get_list_all_questions(session: AsyncSession = Depends(get_session)):
     pass
 
 
-@router.post("/questions/")
+@questions.post("/questions/")
 async def create_new_question(session: AsyncSession = Depends(get_session)):
     question = Question(text="111")
     session.add(question)
@@ -20,11 +20,11 @@ async def create_new_question(session: AsyncSession = Depends(get_session)):
     return question
 
 
-@router.get("/questions/{id}")
+@questions.get("/questions/{id}")
 async def get_question_by_id(id: int, session: AsyncSession = Depends(get_session)):
     pass
 
 
-@router.delete("/questions/{id}")
+@questions.delete("/questions/{id}")
 async def delete_question_by_id(id: int, session: AsyncSession = Depends(get_session)):
     pass
