@@ -14,6 +14,9 @@ async def get_list_all_questions(session: AsyncSession = Depends(get_session)):
 
 @router.post("/questions/")
 async def create_new_question(session: AsyncSession = Depends(get_session)):
-    pass
+    question = Question(text="111")
+    session.add(question)
+    await session.commit()
+    return question
 
 
