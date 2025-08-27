@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.database.functions import create_db
+from app.routers.answers import answers
 from app.routers.questions import questions
 
 
@@ -14,4 +15,5 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(questions)
+app.include_router(answers)
 
