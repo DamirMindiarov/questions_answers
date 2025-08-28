@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database.functions import get_session
@@ -9,7 +10,9 @@ questions = APIRouter()
 
 @questions.get("/questions/")
 async def get_list_all_questions(session: AsyncSession = Depends(get_session)):
-    pass
+    questions_list = await session.execute(select(Question))
+
+    return questions_list.scalars().all()
 
 
 @questions.post("/questions/")
