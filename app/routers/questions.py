@@ -31,6 +31,6 @@ async def delete_question_by_id(id: int, session: AsyncSession = Depends(get_ses
     await session.delete(question)
     await session.commit()
 
-    return "123"
+    return f"deleted question with id {id}"
 
 
