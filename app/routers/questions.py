@@ -12,6 +12,7 @@ questions = APIRouter()
 
 @questions.get("/questions/")
 async def get_list_all_questions(session: AsyncSession = Depends(get_session)) -> list[QuestionPydentic]:
+    """Получить список всех вопросов"""
     questions_list = await session.execute(select(Question))
     questions_list = questions_list.scalars().all()
 
@@ -22,6 +23,7 @@ async def get_list_all_questions(session: AsyncSession = Depends(get_session)) -
 
 @questions.post("/questions/", status_code=status.HTTP_201_CREATED)
 async def create_new_question(question: QuestionText, session: AsyncSession = Depends(get_session)) -> QuestionPydentic:
+    """Создать новый вопрос"""
     if len(question.text) == 0:
         raise HTTPException(status_code=400, detail="Текст вопроса не может быть пустым")
 
@@ -36,6 +38,7 @@ async def create_new_question(question: QuestionText, session: AsyncSession = De
 
 @questions.get("/questions/{id}")
 async def get_question_by_id(id: int, session: AsyncSession = Depends(get_session)) -> QuestionPydentic:
+    """Получить вопрос по id"""
     question = await session.get(Question, id)
 
     if not question:
@@ -48,6 +51,7 @@ async def get_question_by_id(id: int, session: AsyncSession = Depends(get_sessio
 
 @questions.delete("/questions/{id}")
 async def delete_question_by_id(id: int, session: AsyncSession = Depends(get_session)) -> str:
+    """Удалить вопрос по id"""
     question = await session.get(Question, id)
 
     if not question:

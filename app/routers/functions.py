@@ -3,6 +3,7 @@ from app.schemas.questions_answers import QuestionPydentic, AnswerPydentic
 
 
 async def get_pydentic_question(question: Question, answer=None) -> QuestionPydentic:
+    """Получает объект Question преобразует в QuestionPydentic"""
     if answer is None:
         list_answer_pydentic = [AnswerPydentic(**answer.__dict__) for answer in question.answer]
     else:
