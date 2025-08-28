@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database.functions import get_session
 from app.database.models import Question
-from app.schemas.questions_answers import QuestionText, QuestionPydentic, Answer
+from app.schemas.questions_answers import QuestionText, QuestionPydentic, AnswerPydentic
 
 questions = APIRouter()
 
@@ -18,7 +18,7 @@ async def get_list_all_questions(session: AsyncSession = Depends(get_session)) -
         id=question.id,
         text=question.text,
         created_at=question.created_at,
-        answer=[Answer(**answer.__dict__) for answer in question.answer]
+        answer=[AnswerPydentic(**answer.__dict__) for answer in question.answer]
     ) for question in questions_list]
 
     return list_question_pydentic
@@ -34,15 +34,17 @@ async def create_new_question(question: QuestionText, session: AsyncSession = De
 
 
 @questions.get("/questions/{id}")
-async def get_question_by_id(id: int, session: AsyncSession = Depends(get_session)):
+async def get_question_by_id(id: int, session: AsyncSession = Depends(get_session)) -> list[AnswerPydentic]:
     question = await session.get(Question, id)
     answers = question.answer
 
-    return answers
+    list_answer_pydentic =[AnswerPydentic(**answer.__dict__) for answer in answers]
+
+    return list_answer_pydentic
 
 
 @questions.delete("/questions/{id}")
-async def delete_question_by_id(id: int, session: AsyncSession = Depends(get_session)):
+async def delete_question_by_id(id: int, session: AsyncSession = Depends(get_session)) -> str:
     question = await session.get(Question, id)
     await session.delete(question)
     await session.commit()

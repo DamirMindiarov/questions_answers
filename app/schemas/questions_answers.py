@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from pydantic import UUID4
 
 
-class Answer(BaseModel):
+class AnswerPydentic(BaseModel):
     id: int
     question_id: int
     user_id: UUID4
@@ -20,4 +20,4 @@ class QuestionPydentic(BaseModel):
     id: int
     text: str
     created_at: datetime
-    answer: list[Answer]
+    answer: list[AnswerPydentic]
