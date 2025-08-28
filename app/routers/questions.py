@@ -27,6 +27,10 @@ async def get_question_by_id(id: int, session: AsyncSession = Depends(get_sessio
 
 @questions.delete("/questions/{id}")
 async def delete_question_by_id(id: int, session: AsyncSession = Depends(get_session)):
-    pass
+    question = await session.get(Question, id)
+    await session.delete(question)
+    await session.commit()
+
+    return "123"
 
 
