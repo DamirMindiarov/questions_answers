@@ -1,3 +1,4 @@
+import asyncio
 import datetime
 
 import pytest_asyncio
@@ -20,6 +21,10 @@ async def new_get_session():
         yield session
 
 
+async def create_table():
+    async with engine_async.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
 app.dependency_overrides[get_session] = new_get_session
 
 
@@ -32,9 +37,9 @@ async def async_client(create_db):
 @pytest_asyncio.fixture(scope="session")
 async def create_db():
     async with engine_async.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+        await create_table()
         yield
-        await conn.execute(Question.__table__.delete())
+        await conn.run_sync(Base.metadata.drop_all)
 
 
 @pytest_asyncio.fixture(scope="session")
