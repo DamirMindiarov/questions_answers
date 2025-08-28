@@ -33,7 +33,7 @@ class Answer(Base):
         ForeignKey("questions.id", ondelete="CASCADE")
     )
     user_id: Mapped[str] = mapped_column(
-        UUID(as_uuid=True), unique=True, default=uuid4
+        UUID(as_uuid=True), unique=False, default=uuid4
     )
     text: Mapped[str]
     created_at: Mapped[datetime] = mapped_column(default=datetime.now())
