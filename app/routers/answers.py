@@ -18,9 +18,15 @@ async def add_answer_to_question(id: int, session: AsyncSession = Depends(get_se
 
 @answers.get("/answers/{id}")
 async def get_answer_by_id(id: int, session: AsyncSession = Depends(get_session)):
-    pass
+    answer = await session.get(Answer, id)
+
+    return answer
 
 
 @answers.delete("/answers/{id}")
 async def del_answer_by_id(id: int, session: AsyncSession = Depends(get_session)):
-    pass
+    answer = await session.get(Answer, id)
+    await session.delete(answer)
+    await session.commit()
+
+    return f"deleted answer with id {id}"
