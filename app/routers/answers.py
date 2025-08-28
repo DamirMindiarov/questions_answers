@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database.functions import get_session
@@ -10,6 +10,9 @@ answers = APIRouter()
 
 @answers.post("/questions/{id}/answers/", status_code=status.HTTP_201_CREATED)
 async def add_answer_to_question(id: int, answer: AnswerText, session: AsyncSession = Depends(get_session)) -> AnswerPydentic:
+    if len(answer.text) == 0:
+        raise HTTPException(status_code=400, detail="Текст ответа не может быть пустым")
+
     answer = Answer(question_id=id, text=answer.text)
     session.add(answer)
     await session.commit()
