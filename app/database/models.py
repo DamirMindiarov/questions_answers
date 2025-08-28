@@ -17,7 +17,7 @@ class Question(Base):
     text: Mapped[str]
     created_at: Mapped[datetime] = mapped_column(default=datetime.now())
 
-    answer = relationship("Answer", back_populates="question", cascade="all, delete-orphan")
+    answer: Mapped[list["Answer"]] = relationship("Answer", back_populates="question", cascade="all, delete-orphan", uselist=True, lazy="selectin")
 
 
 class Answer(Base):
@@ -28,4 +28,4 @@ class Answer(Base):
     text: Mapped[str]
     created_at: Mapped[datetime] = mapped_column(default=datetime.now())
 
-    question = relationship("Question", back_populates="answer")
+    question: Mapped["Question"] = relationship("Question", back_populates="answer")

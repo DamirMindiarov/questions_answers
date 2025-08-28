@@ -22,7 +22,10 @@ async def create_new_question(session: AsyncSession = Depends(get_session)):
 
 @questions.get("/questions/{id}")
 async def get_question_by_id(id: int, session: AsyncSession = Depends(get_session)):
-    pass
+    question = await session.get(Question, id)
+    answers = question.answer
+
+    return answers
 
 
 @questions.delete("/questions/{id}")
