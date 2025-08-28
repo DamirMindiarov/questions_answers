@@ -22,6 +22,9 @@ async def get_list_all_questions(session: AsyncSession = Depends(get_session)) -
 
 @questions.post("/questions/", status_code=status.HTTP_201_CREATED)
 async def create_new_question(question: QuestionText, session: AsyncSession = Depends(get_session)) -> QuestionPydentic:
+    if len(question.text) == 0:
+        raise HTTPException(status_code=400, detail="Текст вопроса не может быть пустым")
+
     question = Question(text=question.text)
     session.add(question)
     await session.commit()
