@@ -24,12 +24,19 @@ async def add_answer_to_question(id: int, answer: AnswerText, session: AsyncSess
 async def get_answer_by_id(id: int, session: AsyncSession = Depends(get_session)) -> AnswerPydentic:
     answer = await session.get(Answer, id)
 
+    if not answer:
+        raise HTTPException(status_code=400, detail="Ответа с таким id нет")
+
     return AnswerPydentic(**answer.__dict__)
 
 
 @answers.delete("/answers/{id}")
 async def del_answer_by_id(id: int, session: AsyncSession = Depends(get_session)) -> str:
     answer = await session.get(Answer, id)
+
+    if not answer:
+        raise HTTPException(status_code=400, detail="Ответа с таким id нет")
+
     await session.delete(answer)
     await session.commit()
 
