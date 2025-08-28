@@ -18,7 +18,7 @@ async def add_answer_to_question(
             status_code=400, detail="Текст ответа не может быть пустым"
         )
 
-    answer = Answer(question_id=id, text=answer.text)
+    answer = Answer(question_id=id, text=answer.text, user_id=answer.user_id)
     session.add(answer)
     await session.commit()
 
