@@ -18,6 +18,7 @@ class QuestionText(BaseModel):
 
 class AnswerText(BaseModel):
     text: str
+    user_id: str
 
 
 class QuestionPydentic(BaseModel):
