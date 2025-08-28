@@ -43,7 +43,7 @@ async def get_question_by_id(id: int, session: AsyncSession = Depends(get_sessio
     return question_pydentic
 
 
-@questions.delete("/questions/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@questions.delete("/questions/{id}")
 async def delete_question_by_id(id: int, session: AsyncSession = Depends(get_session)) -> str:
     question = await session.get(Question, id)
 

@@ -24,7 +24,7 @@ async def get_answer_by_id(id: int, session: AsyncSession = Depends(get_session)
     return AnswerPydentic(**answer.__dict__)
 
 
-@answers.delete("/answers/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@answers.delete("/answers/{id}")
 async def del_answer_by_id(id: int, session: AsyncSession = Depends(get_session)) -> str:
     answer = await session.get(Answer, id)
     await session.delete(answer)
