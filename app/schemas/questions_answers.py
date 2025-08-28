@@ -16,6 +16,10 @@ class QuestionText(BaseModel):
     text: str
 
 
+class AnswerText(BaseModel):
+    text: str
+
+
 class QuestionPydentic(BaseModel):
     id: int
     text: str
