@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database.functions import get_session
 from app.database.models import Question
-from app.schemas.questions import QuestionText, QuestionPydentic, Answer
+from app.schemas.questions_answers import QuestionText, QuestionPydentic, Answer
 
 questions = APIRouter()
 
