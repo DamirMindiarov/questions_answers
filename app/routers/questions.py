@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -20,7 +20,7 @@ async def get_list_all_questions(session: AsyncSession = Depends(get_session)) -
     return list_question_pydentic
 
 
-@questions.post("/questions/")
+@questions.post("/questions/", status_code=status.HTTP_201_CREATED)
 async def create_new_question(question: QuestionText, session: AsyncSession = Depends(get_session)) -> QuestionPydentic:
     question = Question(text=question.text)
     session.add(question)
@@ -43,7 +43,7 @@ async def get_question_by_id(id: int, session: AsyncSession = Depends(get_sessio
     return question_pydentic
 
 
-@questions.delete("/questions/{id}")
+@questions.delete("/questions/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_question_by_id(id: int, session: AsyncSession = Depends(get_session)) -> str:
     question = await session.get(Question, id)
 
