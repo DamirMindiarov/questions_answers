@@ -8,7 +8,9 @@ from app.database.functions import get_session
 from app.database.models import Base, Question, Answer
 from app.main import app
 
-db_url_async = "postgresql+asyncpg://admin:admin@localhost:5433/questions_answers"
+db_url_async = (
+    "postgresql+asyncpg://admin:admin@localhost:5433/questions_answers"
+)
 engine_async = create_async_engine(url=db_url_async, echo=True)
 session_async = async_sessionmaker(bind=engine_async, expire_on_commit=False)
 
@@ -60,19 +62,21 @@ async def get_question_response(get_new_question, get_session):
     question = await get_session.get(Question, question.id)
 
     answers = [
-        {"id": answer.id,
-         "created_at": datetime.datetime.isoformat(answer.created_at),
-         "question_id": answer.question_id,
-         "text": answer.text,
-         "user_id": str(answer.user_id)
-         }
-        for answer in question.answer]
+        {
+            "id": answer.id,
+            "created_at": datetime.datetime.isoformat(answer.created_at),
+            "question_id": answer.question_id,
+            "text": answer.text,
+            "user_id": str(answer.user_id),
+        }
+        for answer in question.answer
+    ]
 
     question_response = {
-        'answer': answers,
-        'created_at': datetime.datetime.isoformat(question.created_at),
-        'id': question.id,
-        'text': question.text,
+        "answer": answers,
+        "created_at": datetime.datetime.isoformat(question.created_at),
+        "id": question.id,
+        "text": question.text,
     }
 
     yield question_response

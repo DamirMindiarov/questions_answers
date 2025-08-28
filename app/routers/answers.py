@@ -9,10 +9,14 @@ answers = APIRouter()
 
 
 @answers.post("/questions/{id}/answers/", status_code=status.HTTP_201_CREATED)
-async def add_answer_to_question(id: int, answer: AnswerText, session: AsyncSession = Depends(get_session)) -> AnswerPydentic:
+async def add_answer_to_question(
+    id: int, answer: AnswerText, session: AsyncSession = Depends(get_session)
+) -> AnswerPydentic:
     """Добавить ответ к вопросу по его id"""
     if len(answer.text) == 0:
-        raise HTTPException(status_code=400, detail="Текст ответа не может быть пустым")
+        raise HTTPException(
+            status_code=400, detail="Текст ответа не может быть пустым"
+        )
 
     answer = Answer(question_id=id, text=answer.text)
     session.add(answer)
@@ -22,7 +26,9 @@ async def add_answer_to_question(id: int, answer: AnswerText, session: AsyncSess
 
 
 @answers.get("/answers/{id}")
-async def get_answer_by_id(id: int, session: AsyncSession = Depends(get_session)) -> AnswerPydentic:
+async def get_answer_by_id(
+    id: int, session: AsyncSession = Depends(get_session)
+) -> AnswerPydentic:
     """Получить ответ по id"""
     answer = await session.get(Answer, id)
 
@@ -33,7 +39,9 @@ async def get_answer_by_id(id: int, session: AsyncSession = Depends(get_session)
 
 
 @answers.delete("/answers/{id}")
-async def del_answer_by_id(id: int, session: AsyncSession = Depends(get_session)) -> str:
+async def del_answer_by_id(
+    id: int, session: AsyncSession = Depends(get_session)
+) -> str:
     """Удалить ответ по id"""
     answer = await session.get(Answer, id)
 

@@ -1,5 +1,3 @@
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from app.database.db_questions_answers import session_async, engine_async
 from app.database.models import Base
 

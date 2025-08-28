@@ -16,4 +16,3 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.include_router(questions)
 app.include_router(answers)
-

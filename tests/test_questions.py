@@ -12,17 +12,19 @@ async def test_create_new_question(async_client):
 
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_get_list_all_questions(async_client, get_new_question, get_session, get_question_response):
-    response = await async_client.get(
-        f"http://localhost:8000/questions/"
-    )
+async def test_get_list_all_questions(
+    async_client, get_new_question, get_session, get_question_response
+):
+    response = await async_client.get(f"http://localhost:8000/questions/")
 
     assert response.status_code == 200
     assert get_question_response in response.json()
 
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_get_question_by_id(async_client, get_new_question, get_session, get_question_response):
+async def test_get_question_by_id(
+    async_client, get_new_question, get_session, get_question_response
+):
     question = get_new_question
     response = await async_client.get(
         f"http://localhost:8000/questions/{question.id}"
@@ -40,4 +42,4 @@ async def test_delete_question_by_id(async_client, get_new_question):
     )
 
     assert response.status_code == 200
-    assert response.json() == f'deleted question with id {question.id}'
+    assert response.json() == f"deleted question with id {question.id}"
