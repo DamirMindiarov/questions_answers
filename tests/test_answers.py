@@ -7,7 +7,10 @@ async def test_add_answer_to_question(async_client, get_new_question):
 
     response = await async_client.post(
         f"http://localhost:8000/questions/{question.id}/answers/",
-        json={"text": "answer text", "user_id": "d1dba3f0-ddbb-43a5-a28c-a88db3379c98"},
+        json={
+            "text": "answer text",
+            "user_id": "d1dba3f0-ddbb-43a5-a28c-a88db3379c98",
+        },
     )
 
     answer = {
@@ -41,7 +44,10 @@ async def test_del_answer_by_id(async_client, get_new_question):
 
     added_answer = await async_client.post(
         f"http://localhost:8000/questions/{question.id}/answers/",
-        json={"text": "answer text", "user_id": "d1dba3f0-ddbb-43a5-a28c-a88db3379c98"},
+        json={
+            "text": "answer text",
+            "user_id": "d1dba3f0-ddbb-43a5-a28c-a88db3379c98",
+        },
     )
     response = await async_client.delete(
         f"http://localhost:8000/answers/{added_answer.json()["id"]}"

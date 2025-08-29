@@ -25,6 +25,7 @@ async def create_table():
     async with engine_async.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
+
 app.dependency_overrides[get_session] = new_get_session
 
 
