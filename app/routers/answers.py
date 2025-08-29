@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, status, HTTPException
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database.functions import get_session
@@ -19,8 +20,14 @@ async def add_answer_to_question(
         )
 
     answer = Answer(question_id=id, text=answer.text, user_id=answer.user_id)
-    session.add(answer)
-    await session.commit()
+
+    try:
+        session.add(answer)
+        await session.commit()
+    except IntegrityError:
+        raise HTTPException(
+            status_code=400, detail="Нет такого вопроса с таким id"
+        )
 
     return AnswerPydentic(**answer.__dict__)
 
